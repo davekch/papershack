@@ -1,5 +1,6 @@
 from django.db import models
 from taggit.managers import TaggableManager
+from papers.utility import create_uuid
 
 
 class File(models.Model):
@@ -18,7 +19,7 @@ class Author(models.Model):
 
 
 class Record(models.Model):
-    uuid = models.UUIDField()
+    uuid = models.UUIDField(primary_key=True, default=create_uuid, editable=False)
     file = models.OneToOneField("File", on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=300)
     authors = models.ManyToManyField("Author")
