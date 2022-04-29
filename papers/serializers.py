@@ -24,7 +24,7 @@ class AuthorListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Author
-        fields = ["name"]
+        fields = ["name", "url"]
 
 
 class RecordCreateSerializer(serializers.ModelSerializer):
@@ -32,7 +32,7 @@ class RecordCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Record
-        fields = ["uuid", "title", "authors"]
+        fields = ["title", "authors"]
 
     def create(self, validated_data):
         author_names = validated_data.pop("authors")
@@ -43,10 +43,9 @@ class RecordCreateSerializer(serializers.ModelSerializer):
 
 
 class RecordListSerializer(TaggitSerializer, serializers.HyperlinkedModelSerializer):
-    tags = TagListSerializerField()
-    # authors = AuthorListSerializer()
+    # tags = TagListSerializerField()
+    authors = AuthorListSerializer(many=True)
 
     class Meta:
         model = Record
-        fields = ["uuid", "title", "authors", "tags"]
-
+        fields = ["title", "authors", "url"]

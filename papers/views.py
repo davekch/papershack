@@ -11,7 +11,7 @@ class RecordViewSet(viewsets.ModelViewSet):
     """API endpoint for records"""
 
     queryset = Record.objects.all()
-    serializer_class = RecordCreateSerializer
+    serializer_class = RecordListSerializer
     action_serializers = {
         "list": RecordListSerializer,
         "create": RecordCreateSerializer,
