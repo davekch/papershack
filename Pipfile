@@ -7,7 +7,8 @@ name = "pypi"
 django = "*"
 django-taggit = "*"
 djangorestframework = "*"
-django-taggit-serializer = "*"
+# this is a fork of django-taggit-serializer which is slightly more up to date
+dj-taggit-serializer = "*"
 
 [dev-packages]
 
