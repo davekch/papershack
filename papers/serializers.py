@@ -28,6 +28,8 @@ class AuthorListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class RecordCreateSerializer(TaggitSerializer, serializers.ModelSerializer):
+    """serializer to create a record"""
+
     tags = TagListSerializerField()
     authors = AuthorCreateSerializer()
 
@@ -46,6 +48,8 @@ class RecordCreateSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 
 class RecordListSerializer(TaggitSerializer, serializers.HyperlinkedModelSerializer):
+    """serializer to show one or many records"""
+
     tags = TagListSerializerField()
     authors = AuthorListSerializer(many=True)
 
