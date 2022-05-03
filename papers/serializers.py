@@ -35,7 +35,7 @@ class RecordCreateSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     class Meta:
         model = Record
-        fields = ["title", "authors", "tags"]
+        fields = ["title", "authors", "tags", "file"]
 
     def create(self, validated_data: dict):
         author_names = validated_data.pop("authors")
@@ -55,4 +55,4 @@ class RecordListSerializer(TaggitSerializer, serializers.HyperlinkedModelSeriali
 
     class Meta:
         model = Record
-        fields = ["title", "authors", "tags", "url"]
+        fields = ["title", "authors", "tags", "url", "file"]
