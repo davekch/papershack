@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from taggit.managers import TaggableManager
 from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase, Tag
 from papers.utility import create_uuid
@@ -10,8 +11,10 @@ class File(models.Model):
     class MimeType(models.TextChoices):
         PDF = "application/pdf"
 
-    mimetype = models.CharField(max_length=30, choices=MimeType.choices)
-    path = models.FilePathField()
+    mimetype = models.CharField(
+        max_length=30, choices=MimeType.choices, default=MimeType.PDF
+    )
+    path = models.FilePathField(path=settings.FILESTORAGE_DIR, recursive=True)
 
 
 class Author(models.Model):
