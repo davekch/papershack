@@ -1,7 +1,8 @@
 from django.db import models
+from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
-from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase, Tag
 from papers.utility import create_uuid
 
 
@@ -34,3 +35,11 @@ class Record(models.Model):
     title = models.CharField(max_length=300)
     authors = models.ManyToManyField("Author")
     tags = TaggableManager(through=UUIDTaggedItem)
+
+    def delete(self) -> tuple[int, dict[str, int]]:
+        deleted = super().delete()
+        # clean up unreferenced tags
+        Tag.objects.annotate(n_references=Count("papers_uuidtaggeditem_items")).filter(
+            n_references=0
+        ).delete()
+        return deleted
