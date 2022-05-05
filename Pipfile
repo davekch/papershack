@@ -9,6 +9,8 @@ django-taggit = "*"
 djangorestframework = "*"
 # this is a fork of django-taggit-serializer which is slightly more up to date
 dj-taggit-serializer = "*"
+django-cors-headers = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
