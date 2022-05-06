@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import UserService from "../services/user.service";
 
 export default {
   name: "RecordsList",
@@ -25,31 +25,15 @@ export default {
       records: [],
     };
   },
-  methods: {
-    ...mapGetters(["getTokenAccess"]),
-    async getData() {
-      const token = this.getTokenAccess();
-      try {
-        const response = await fetch("http://127.0.0.1:8000/api/records/", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-        });
-        const result = await response.json();
-        this.records = result.results;
-        console.log("the thing:");
-        console.log(result);
-        console.log("the results:");
-        console.log(result.results);
-      } catch (error) {
+  mounted() {
+    UserService.getRecords().then(
+      (response) => {
+        this.records = response.data.results;
+      },
+      (error) => {
         console.log(error);
       }
-    },
-  },
-  created() {
-    this.getData();
+    );
   },
 };
 </script>

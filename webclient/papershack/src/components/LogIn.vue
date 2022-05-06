@@ -13,8 +13,6 @@
 
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
-
 export default {
   data: () => {
     return {
@@ -23,26 +21,21 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setTokenAccess", "setTokenRefresh"]),
-    ...mapGetters(["isAuthenticated"]),
     async login(e) {
       e.preventDefault();
-      const response = await fetch("http://127.0.0.1:8000/api/token/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      this.$store
+        .dispatch("auth/login", {
           username: this.username,
           password: this.password,
-        }),
-      });
-      const { access, refresh } = await response.json();
-      this.setTokenAccess(access);
-      this.setTokenRefresh(refresh);
-      if (this.isAuthenticated()) {
-        this.$router.push("/records");
-      }
+        })
+        .then(
+          () => {
+            this.$router.push("/records");
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     },
   },
 };
